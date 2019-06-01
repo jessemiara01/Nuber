@@ -1,7 +1,7 @@
 // /client/App.js
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import './column.css';
 class App extends Component {
   // initialize our state
   state = {
@@ -101,20 +101,58 @@ class App extends Component {
   // see them render into our screen
   render() {
     const { driver } = this.state;
+    const styleGrey = {backgroundColor : 'grey'};
+    const styleWhite = {backgroundColor : 'white'};
+    const styleRed = {backgroundColor : 'red'};
     return (
-      <div>
-        <ul>
+<div class="row">
+  <div class="column" style={styleGrey} >
+  <h1>Drivers: </h1>
+  <ul>
           {driver.length <= 0
             ? <h1>Nothing in the database </h1>
             : driver.map((dat) => (
                 <li style={{ padding: '10px' }} key={dat.id}>
-                  <span style={{ color: 'gray' }}> Driver Name: </span> {dat.name} <br />
-                  <span style={{ color: 'gray' }}> Available?: </span> {dat.avail} <br />
-                  <span style={{ color: 'gray' }}> rating: </span> {dat.rating}
+                  <span style={{ color: 'black' }}> Driver Name: </span> {dat.name} <br />
+                  <span style={{ color: 'black' }}> Available?: </span> {dat.avail} <br />
+                  <span style={{ color: 'black' }}> rating: </span> {dat.rating}
                 </li>
               ))}
         </ul>
-        <div style={{ padding: '10px' }}>
+  </div>
+
+  <div class="column"  style={styleWhite}>
+  <h1>Users:</h1>
+  <ul>
+          {driver.length <= 0
+            ? <h1>Nothing in the database </h1>
+            : driver.map((dat) => (
+                <li style={{ padding: '10px' }} key={dat.id}>
+                  <span style={{ color: 'black' }}> User Name: </span> {dat.name} <br />
+                  <span style={{ color: 'black' }}> Wanting Pickup?: </span> {dat.avail} <br />
+                  <span style={{ color: 'black' }}> rating: </span> {dat.rating}
+                </li>
+              ))}
+        </ul>
+  </div>
+  
+  <div class="column" style ={styleRed} >
+  <h1>Admins: </h1>
+
+  <ul>
+          {driver.length <= 0
+            ? <h1>Nothing in the database </h1>
+            : driver.map((dat) => (
+                <li style={{ padding: '10px' }} key={dat.id}>
+                  <span style={{ color: 'black' }}> Admin Name: </span> {dat.name} <br />
+                </li>
+              ))}
+        </ul>
+  
+  </div>
+
+
+        {/* <div style={{ padding: '10px' }}>
           <input
             type="text"
             onChange={(e) => this.setState({ message: e.target.value })}
@@ -156,9 +194,9 @@ class App extends Component {
           >
             UPDATE
           </button>
-        </div>
+        </div> */}
       </div>
-    );
+    ); 
   }
 }
 
