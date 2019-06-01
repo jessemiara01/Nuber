@@ -6,6 +6,8 @@ class App extends Component {
   // initialize our state
   state = {
     driver: [],
+    customer:[],
+    admin:[],
     message: null,
     intervalIsSet: false,
     idToDelete: null,
@@ -17,12 +19,21 @@ class App extends Component {
   // then we incorporate a polling logic so that we can easily see if our db has
   // changed and implement those changes into our UI
   componentDidMount() {
-    this.getDataFromDb();
+    this.getDriversFromDb();
+    this.getCustomersFromDb();
+    this.getAdminsFromDb();
     if (!this.state.intervalIsSet) {
-      let interval = setInterval(this.getDataFromDb, 1000);
-      this.setState({ intervalIsSet: interval });
+      let interval1 = setInterval(this.getDriversFromDb, 1000);
+      this.setState({ intervalIsSet: interval1 });
+      let interval2 = setInterval(this.getCustomersFromDb, 1000);
+      this.setState({ intervalIsSet: interval2 });
+      let interval3 = setInterval(this.getAdminsFromDb, 1000);
+      this.setState({ intervalIsSet: interval3 })
+      
     }
   }
+
+
 
   // never let a process live forever
   // always kill a process everytime we are done using it
@@ -38,13 +49,26 @@ class App extends Component {
   // for our back end, we use the object id assigned by MongoDB to modify
   // data base entries
 
-  // our first get method that uses our backend api to
-  // fetch data from our data base
-  getDataFromDb = () => {
-    fetch('http://localhost:3001/api/getData')
+  // GET Method for driver data
+  getDriversFromDb = () => {
+    fetch('http://localhost:3001/api/getDrivers')
       .then((driver) => driver.json())
       .then((res) => this.setState({ driver: res.driver }));
   };
+  // GET Method for user data
+  getCustomersFromDb = () => {
+    fetch('http://localhost:3001/api/getCustomers')
+      .then((customer) => customer.json())
+      .then((res) => this.setState({ customer: res.customer }));
+  };
+
+    // GET Method for admin data
+    getAdminsFromDb = () => {
+      fetch('http://localhost:3001/api/getAdmins')
+        .then((admin) => admin.json())
+        .then((res) => this.setState({ admin: res.admin }));
+    };
+  
 
   // our put method that uses our backend api
   // to create new query into our data base
@@ -101,6 +125,8 @@ class App extends Component {
   // see them render into our screen
   render() {
     const { driver } = this.state;
+    const { customer } = this.state;
+    const { admin } = this.state;
     const styleGrey = {backgroundColor : 'grey'};
     const styleWhite = {backgroundColor : 'white'};
     const styleRed = {backgroundColor : 'red'};
@@ -111,11 +137,11 @@ class App extends Component {
   <ul>
           {driver.length <= 0
             ? <h1>Nothing in the database </h1>
-            : driver.map((dat) => (
-                <li style={{ padding: '10px' }} key={dat.id}>
-                  <span style={{ color: 'black' }}> Driver Name: </span> {dat.name} <br />
-                  <span style={{ color: 'black' }}> Available?: </span> {dat.avail} <br />
-                  <span style={{ color: 'black' }}> rating: </span> {dat.rating}
+            : driver.map((driv) => (
+                <li style={{ padding: '10px' }} key={driv.id}>
+                  <span style={{ color: 'black' }}> Driver Name: </span> {driv.name} <br />
+                  <span style={{ color: 'black' }}> Available?: </span> {driv.avail} <br />
+                  <span style={{ color: 'black' }}> rating: </span> {driv.rating}
                 </li>
               ))}
         </ul>
@@ -124,13 +150,13 @@ class App extends Component {
   <div class="column"  style={styleWhite}>
   <h1>Users:</h1>
   <ul>
-          {driver.length <= 0
+          {customer.length <= 0
             ? <h1>Nothing in the database </h1>
-            : driver.map((dat) => (
-                <li style={{ padding: '10px' }} key={dat.id}>
-                  <span style={{ color: 'black' }}> User Name: </span> {dat.name} <br />
-                  <span style={{ color: 'black' }}> Wanting Pickup?: </span> {dat.avail} <br />
-                  <span style={{ color: 'black' }}> rating: </span> {dat.rating}
+            : customer.map((cust) => (
+                <li style={{ padding: '10px' }} key={cust.id}>
+                  <span style={{ color: 'black' }}> User Name: </span> {cust.name} <br />
+                  <span style={{ color: 'black' }}> Wanting Pickup?: </span> {cust.wantPickup} <br />
+                  <span style={{ color: 'black' }}> rating: </span> {cust.rating}
                 </li>
               ))}
         </ul>
@@ -138,13 +164,12 @@ class App extends Component {
   
   <div class="column" style ={styleRed} >
   <h1>Admins: </h1>
-
   <ul>
-          {driver.length <= 0
+          {admin.length <= 0
             ? <h1>Nothing in the database </h1>
-            : driver.map((dat) => (
-                <li style={{ padding: '10px' }} key={dat.id}>
-                  <span style={{ color: 'black' }}> Admin Name: </span> {dat.name} <br />
+            : admin.map((adm) => (
+                <li style={{ padding: '10px' }} key={adm.id}>
+                  <span style={{ color: 'black' }}> Admin Name: </span> {adm.name} <br />
                 </li>
               ))}
         </ul>

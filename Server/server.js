@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const Data = require('./api/models/driverModel');
 const Driver = require('./api/models/driverModel');
+const Customer = require('./api/models/customerModel');
+const Admin = require('./api/models/adminModel');
 
 const API_PORT = 3001;
 const app = express();
@@ -32,12 +34,28 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-// this is our get method
-// this method fetches all available data in our database
-router.get('/getData', (req, res) => {
+//GET method for drivers
+router.get('/getDrivers', (req, res) => {
   Driver.find((err, driver) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({driver: driver });
+  });
+});
+
+//GET method for users
+router.get('/getCustomers', (req, res) => {
+  Customer.find((err, customer) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({customer: customer });
+  });
+});
+
+
+//GET method for admins
+router.get('/getAdmins', (req, res) => {
+  Admin.find((err, admin) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({admin: admin });
   });
 });
 
