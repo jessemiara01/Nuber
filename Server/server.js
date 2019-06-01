@@ -81,10 +81,49 @@ router.delete('/deleteData', (req, res) => {
 
 // this is our create method
 // this method adds new data in our database
-router.post('/putData', (req, res) => {
+router.post('/putAdmin', (req, res) => {
+  let admin = new Admin();
+
+  const {id, name} = req.body;
+
+  if (!name) {
+    return res.json({
+      success: false,
+      error: 'INVALID INPUTS',
+    });
+  }
+  admin.name = name;
+
+  admin.save((err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
+router.post('/putCustomer', (req, res) => {
+  let customer = new Customer();
+
+  const {id, name, wantPickup, rating} = req.body;
+
+  if (!name) {
+    return res.json({
+      success: false,
+      error: 'INVALID INPUTS',
+    });
+  }
+  customer.name = name;
+  customer.wantPickup = wantPickup;
+  customer.rating = rating;
+
+  customer.save((err) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+router.post('/putDriver', (req, res) => {
   let driver = new Driver();
 
-  const { id, name, avail, rating } = req.body;
+  const {id, name, avail, rating} = req.body;
 
   if (!name) {
     return res.json({
@@ -95,11 +134,13 @@ router.post('/putData', (req, res) => {
   driver.name = name;
   driver.avail = avail;
   driver.rating = rating;
+
   driver.save((err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
 });
+
 
 // append /api for our http requests
 app.use('/api', router);

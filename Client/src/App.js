@@ -9,6 +9,10 @@ class App extends Component {
     customer:[],
     admin:[],
     message: null,
+    name: null,
+    avail: null,
+    wantPickup: null,
+    rating: null,
     intervalIsSet: false,
     idToDelete: null,
     idToUpdate: null,
@@ -70,20 +74,36 @@ class App extends Component {
     };
   
 
-  // our put method that uses our backend api
-  // to create new query into our data base
-  putDataToDB = (message) => {
-    let currentIds = this.state.data.map((data) => data.id);
-    let idToBeAdded = 0;
-    while (currentIds.includes(idToBeAdded)) {
-      ++idToBeAdded;
-    }
+  // Put Customer into DB
+  putCustomerInDB = (name, wantPickup, rating) => {
 
-    axios.post('http://localhost:3001/api/putData', {
-      id: idToBeAdded,
-      message: message,
+    axios.post('http://localhost:3001/api/putCustomer', {
+      name: name,
+      wantPickup: wantPickup,
+      rating: rating,
     });
   };
+  
+  //Put admin into DB
+  putAdminInDB = (name) => {
+
+
+    axios.post('http://localhost:3001/api/putAdmin', {
+      name: name,
+    });
+  };
+
+    //Put driver into DB
+    putDriverInDB = (name, avail, rating) => {
+
+
+      axios.post('http://localhost:3001/api/putDriver', {
+        name: name,
+        avail: avail,
+        rating: rating,
+      });
+    };
+  
 
   // our delete method that uses our backend api
   // to remove existing database information
@@ -140,11 +160,34 @@ class App extends Component {
             : driver.map((driv) => (
                 <li style={{ padding: '10px' }} key={driv.id}>
                   <span style={{ color: 'black' }}> Driver Name: </span> {driv.name} <br />
-                  <span style={{ color: 'black' }}> Available?: </span> {driv.avail} <br />
+                  <span style={{ color: 'black' }}> Available to drive?: </span> {driv.avail} <br />
                   <span style={{ color: 'black' }}> rating: </span> {driv.rating}
                 </li>
               ))}
         </ul>
+        <div style={{ padding: '10px' }}>
+          <input
+            type="text"
+            onChange={(e) => this.setState({ name: e.target.value })}
+            placeholder="Driver's name"
+            style={{ width: '200px' }}
+          />
+            <input
+            type="text"
+            onChange={(e) => this.setState({ avail: e.target.value })}
+            placeholder="Available to drive?"
+            style={{ width: '200px' }}
+          />
+                    <input
+            type="text"
+            onChange={(e) => this.setState({ rating: e.target.value })}
+            placeholder="Rating"
+            style={{ width: '200px' }}
+          />
+          <button onClick={() => this.putDriverInDB(this.state.name, this.state.avail, this.state.rating)}>
+            ADD
+          </button>
+        </div>
   </div>
 
   <div class="column"  style={styleWhite}>
@@ -160,6 +203,29 @@ class App extends Component {
                 </li>
               ))}
         </ul>
+        <div style={{ padding: '10px' }}>
+          <input
+            type="text"
+            onChange={(e) => this.setState({ name: e.target.value })}
+            placeholder="User's Name"
+            style={{ width: '200px' }}
+          />
+                    <input
+            type="text"
+            onChange={(e) => this.setState({ wantPickup: e.target.value })}
+            placeholder="Available for pickup?"
+            style={{ width: '200px' }}
+          />
+                    <input
+            type="text"
+            onChange={(e) => this.setState({ rating: e.target.value })}
+            placeholder="Rating"
+            style={{ width: '200px' }}
+          />
+          <button onClick={() => this.putCustomerInDB(this.state.name, this.state.wantPickup, this.state.rating)}>
+            ADD
+          </button>
+        </div>
   </div>
   
   <div class="column" style ={styleRed} >
@@ -171,8 +237,20 @@ class App extends Component {
                 <li style={{ padding: '10px' }} key={adm.id}>
                   <span style={{ color: 'black' }}> Admin Name: </span> {adm.name} <br />
                 </li>
+                
               ))}
         </ul>
+        <div style={{ padding: '10px' }}>
+          <input
+            type="text"
+            onChange={(e) => this.setState({ name: e.target.value })}
+            placeholder="add an admin to the database"
+            style={{ width: '200px' }}
+          />
+          <button onClick={() => this.putAdminInDB(this.state.name)}>
+            ADD
+          </button>
+        </div>
   
   </div>
 
