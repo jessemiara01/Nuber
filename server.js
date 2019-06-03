@@ -12,19 +12,23 @@ const Customer = require('./api/models/customerModel');
 const Admin = require('./api/models/adminModel');
 
 
-const API_PORT = 3001;
+const API_PORT = process.env.PORT || 3001;
 const app = express();
 app.use(cors());
 app.use(express.static(path.join(__dirname, "client", "build")));
 
 const router = express.Router();
 
+if(process.env.NODE_ENV === "Production"){
+  app.use(express.static("client/build"));
+}
+
 // this is our MongoDB database
 const dbRoute =
-"mongodb+srv://user:Marissa11@cluster0-nc34i.mongodb.net/test?retryWrites=true";
+"mongodb://admin:Marissa11@ds133328.mlab.com:33328/heroku_j051rvkz";
 
 // connects our back end code with the database
-mongoose.connect(process.env.dbRoute.MONGOLAB_ONYX_URI || dbRoute, { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || dbRoute, { useNewUrlParser: true });
 mongoose.set('useFindAndModify', false);
 var ObjectId = mongoose.Types.ObjectId;
 
@@ -190,4 +194,4 @@ app.get("*", (req, res) => {
 });
 
 // launch our backend into a port
-app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
+app.listen( API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
