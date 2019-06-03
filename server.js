@@ -5,7 +5,7 @@ var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const path = require("path");
-const dotenv = require("dotenv").config();
+const dotenv = require("dotenv").config()
 
 const Driver = require('./api/models/driverModel');
 const Customer = require('./api/models/customerModel');
@@ -21,10 +21,10 @@ const router = express.Router();
 
 // this is our MongoDB database
 const dbRoute =
-"mongolab-sinuous-48325";
+"mongodb+srv://user:Marissa11@cluster0-nc34i.mongodb.net/test?retryWrites=true";
 
 // connects our back end code with the database
-mongoose.connect(dbRoute, { useNewUrlParser: true });
+mongoose.connect(process.env.dbRoute.MONGOLAB_ONYX_URI || dbRoute, { useNewUrlParser: true });
 mongoose.set('useFindAndModify', false);
 var ObjectId = mongoose.Types.ObjectId;
 
