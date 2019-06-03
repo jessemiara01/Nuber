@@ -157,18 +157,19 @@ class App extends Component {
 
   // our update method that uses our backend api
   // to overwrite existing data base information
-  updateDB = (idToUpdate, updateToApply) => {
-    let objIdToUpdate = null;
-    parseInt(idToUpdate);
-    this.state.data.forEach((dat) => {
-      if (dat.id == idToUpdate) {
-        objIdToUpdate = dat._id;
-      }
-    });
+  updateDriver = (idToUpdate, updateToApply) => {
 
-    axios.post('http://localhost:3001/api/updateData', {
-      id: objIdToUpdate,
-      update: { message: updateToApply },
+    axios.post('http://localhost:3001/api/updateDriver', {
+      id: idToUpdate,
+      update: { avail: updateToApply },
+    });
+  };
+
+  updateCustomer = (idToUpdate, updateToApply) => {
+
+    axios.post('http://localhost:3001/api/updateCustomer', {
+      id: idToUpdate,
+      update: { wantPickup: updateToApply },
     });
   };
 
@@ -230,12 +231,34 @@ class App extends Component {
             type="text"
             style={{ width: '200px' }}
             onChange={(e) => this.setState({ idToDelete: e.target.value })}
-            placeholder="put id of item to delete here"
+            placeholder="put id of the Driver to delete here"
           />
           <button onClick={() => this.deleteDriver(this.state.idToDelete)}>
             DELETE
           </button>
         </div>
+        <div style={{ padding: '0px' }}>
+          <br></br>
+          <input
+            type="text"
+            style={{ width: '200px' }}
+            onChange={(e) => this.setState({ idToUpdate: e.target.value })}
+            placeholder="id of Driver to update here"
+          />
+          <input
+            type="text"
+            style={{ width: '200px' }}
+            onChange={(e) => this.setState({ updateToApply: e.target.value })}
+            placeholder="new availability status"
+          />
+          <button
+            onClick={() =>
+              this.updateDriver(this.state.idToUpdate, this.state.updateToApply)
+            }
+          >
+            UPDATE
+          </button>
+        </div> 
         </div>
   </div>
 
@@ -288,6 +311,28 @@ class App extends Component {
             DELETE
           </button>
         </div>
+        <div style={{ padding: '0px' }}>
+          <br></br>
+          <input
+            type="text"
+            style={{ width: '200px' }}
+            onChange={(e) => this.setState({ idToUpdate: e.target.value })}
+            placeholder="id of Customer to update here"
+          />
+          <input
+            type="text"
+            style={{ width: '200px' }}
+            onChange={(e) => this.setState({ updateToApply: e.target.value })}
+            placeholder="new availability status"
+          />
+          <button
+            onClick={() =>
+              this.updateCustomer(this.state.idToUpdate, this.state.updateToApply)
+            }
+          >
+            UPDATE
+          </button>
+        </div> 
         </div>
   </div>
   
@@ -334,17 +379,7 @@ class App extends Component {
 
 
         {/*
-        <div style={{ padding: '10px' }}>
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ idToDelete: e.target.value })}
-            placeholder="put id of item to delete here"
-          />
-          <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
-            DELETE
-          </button>
-        </div>
+
         <div style={{ padding: '10px' }}>
           <input
             type="text"

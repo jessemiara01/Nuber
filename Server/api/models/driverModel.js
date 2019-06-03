@@ -8,7 +8,7 @@ var DriverSchema = new Schema({
     _id: Number,
     name: String,
     avail: String,
-    rating: String,
+    rating: Number,
 });
 
 module.exports = mongoose.model('Driver', DriverSchema);
