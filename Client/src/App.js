@@ -15,7 +15,7 @@ class App extends Component {
     wantPickup: null,
     rating: null,
     intervalIsSet: false,
-    idToDelete: null,
+    idToDelete: 0,
     idToUpdate: null,
     objectToUpdate: null,
   };
@@ -118,8 +118,8 @@ class App extends Component {
 
 
       axios.post('http://localhost:3001/api/putDriver', {
-        _id: idToBeAdded,
-        name: name,
+      _id: idToBeAdded,  
+      name: name,
         avail: avail,
         rating: rating,
       });
@@ -128,18 +128,29 @@ class App extends Component {
 
   // our delete method that uses our backend api
   // to remove existing database information
-  deleteFromDB = (idTodelete) => {
-    parseInt(idTodelete);
-    let objIdToDelete = null;
-    this.state.data.forEach((dat) => {
-      if (dat.id == idTodelete) {
-        objIdToDelete = dat._id;
-      }
-    });
-
-    axios.delete('http://localhost:3001/api/deleteData', {
+  deleteDriver = (idTodelete) => {
+ 
+    axios.delete('http://localhost:3001/api/deleteDriver', {
       data: {
-        id: objIdToDelete,
+        id: idTodelete,
+      },
+    });
+  };
+
+  deleteCustomer = (idTodelete) => {
+ 
+    axios.delete('http://localhost:3001/api/deleteCustomer', {
+      data: {
+        id: idTodelete,
+      },
+    });
+  };
+
+  deleteAdmin = (idTodelete) => {
+ 
+    axios.delete('http://localhost:3001/api/deleteAdmin', {
+      data: {
+        id: idTodelete,
       },
     });
   };
@@ -172,7 +183,10 @@ class App extends Component {
     const styleWhite = {backgroundColor : 'white'};
     const styleRed = {backgroundColor : 'red'};
     return (
+
+
 <div class="row">
+<h1 align="center">Nuber Database UI</h1>
   <div class="column" style={styleGrey} >
   <h1>Drivers: </h1>
   <ul>
@@ -187,7 +201,7 @@ class App extends Component {
                 </li>
               ))}
         </ul>
-        <div style={{ padding: '10px' }}>
+        <div style={{ padding: '0px' }}>
           <input
             type="text"
             onChange={(e) => this.setState({ name: e.target.value })}
@@ -200,7 +214,7 @@ class App extends Component {
             placeholder="Available to drive?"
             style={{ width: '200px' }}
           />
-                    <input
+          <input
             type="text"
             onChange={(e) => this.setState({ rating: e.target.value })}
             placeholder="Rating"
@@ -209,6 +223,19 @@ class App extends Component {
           <button onClick={() => this.putDriverInDB(this.state.name, this.state.avail, this.state.rating)}>
             ADD
           </button>
+          <br></br>
+          <br></br>
+          <div style={{ padding: '0px' }}>
+          <input
+            type="text"
+            style={{ width: '200px' }}
+            onChange={(e) => this.setState({ idToDelete: e.target.value })}
+            placeholder="put id of item to delete here"
+          />
+          <button onClick={() => this.deleteDriver(this.state.idToDelete)}>
+            DELETE
+          </button>
+        </div>
         </div>
   </div>
 
@@ -248,6 +275,19 @@ class App extends Component {
           <button onClick={() => this.putCustomerInDB(this.state.name, this.state.wantPickup, this.state.rating)}>
             ADD
           </button>
+          <br></br>
+          <br></br>
+          <div style={{ padding: '0px' }}>
+          <input
+            type="text"
+            style={{ width: '200px' }}
+            onChange={(e) => this.setState({ idToDelete: e.target.value })}
+            placeholder="put id of item to delete here"
+          />
+          <button onClick={() => this.deleteCustomer(this.state.idToDelete)}>
+            DELETE
+          </button>
+        </div>
         </div>
   </div>
   
@@ -274,22 +314,26 @@ class App extends Component {
           <button onClick={() => this.putAdminInDB(this.state.name)}>
             ADD
           </button>
+          <br></br>
+          <br></br>
+          <div style={{ padding: '0px' }}>
+          <input
+            type="text"
+            style={{ width: '200px' }}
+            onChange={(e) => this.setState({ idToDelete: e.target.value })}
+            placeholder="put id of item to delete here"
+          />
+          <button onClick={() => this.deleteAdmin(this.state.idToDelete)}>
+            DELETE
+          </button>
+        </div>
+          
         </div>
   
   </div>
 
 
-        {/* <div style={{ padding: '10px' }}>
-          <input
-            type="text"
-            onChange={(e) => this.setState({ message: e.target.value })}
-            placeholder="add something in the database"
-            style={{ width: '200px' }}
-          />
-          <button onClick={() => this.putDataToDB(this.state.message)}>
-            ADD
-          </button>
-        </div>
+        {/*
         <div style={{ padding: '10px' }}>
           <input
             type="text"
