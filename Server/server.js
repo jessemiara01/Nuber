@@ -20,6 +20,8 @@ const dbRoute =
 
 // connects our back end code with the database
 mongoose.connect(dbRoute, { useNewUrlParser: true });
+mongoose.set('useFindAndModify', false);
+var ObjectId = mongoose.Types.ObjectId;
 
 let db = mongoose.connection;
 
@@ -71,13 +73,31 @@ router.post('/updateData', (req, res) => {
 
 // this is our delete method
 // this method removes existing data in our database
-router.delete('/deleteData', (req, res) => {
-  const { id } = req.body;
-  Data.findByIdAndRemove(id, (err) => {
+router.delete('/deleteDriver', (req, res) => {
+
+    Driver.findByIdAndDelete(req.body.id, (err) => {
+      if (err) return res.send(err);
+      return res.json({ success: true });
+    });
+});
+
+router.delete('/deleteCustomer', (req, res) => {
+
+  Customer.findByIdAndDelete(req.body.id, (err) => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });
 });
+
+router.delete('/deleteAdmin', (req, res) => {
+
+  Admin.findByIdAndDelete(req.body.id, (err) => {
+    if (err) return res.send(err);
+    return res.json({ success: true });
+  });
+});
+
+
 
 // this is our create method
 // this method adds new data in our database
