@@ -1,35 +1,32 @@
 {
-  "name": "Nuber",
+  "name": "nuber",
   "version": "1.0.0",
-  "description": "",
+  "description": "Practicing with node js",
   "main": "index.js",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "concurrently": "^4.1.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "mongoose": "^5.5.11",
-    "morgan": "^1.9.1"
-  },
   "scripts": {
-      "start": "concurrently \"cd backend && node server.js\" \"cd client && npm start\""
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jessemiara01/Nuber.git"
+    "url": "github.com/jessemiara01"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "none"
+  ],
+  "author": "Jesse Miara",
   "license": "ISC",
-  "dependencies": {
-      "concurrently": "^4.0.1"
-
-  "bugs": {
-    "url": "https://github.com/jessemiara01/Nuber/issues"
+  "devDependencies": {
+    "nodemon": "^1.19.0"
   },
-  "homepage": "https://github.com/jessemiara01/Nuber#readme"
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.0",
+    "google-distance": "^1.0.1",
+    "google_directions": "^0.6.0",
+    "http-errors": "^1.7.2",
+    "mongoose": "^5.5.10",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7"
+  },
+  "start": "nodemon server.js"
 }
