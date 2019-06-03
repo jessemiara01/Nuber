@@ -62,14 +62,14 @@ class App extends Component {
   };
   // GET Method for user data
   getCustomersFromDb = () => {
-    fetch('http://localhost:3001/api/getCustomers')
+    fetch('https://nuber-manager.herokuapp.com/api/getCustomers')
       .then((customer) => customer.json())
       .then((res) => this.setState({ customer: res.customer }));
   };
 
     // GET Method for admin data
     getAdminsFromDb = () => {
-      fetch('http://localhost:3001/api/getAdmins')
+      fetch('https://nuber-manager.herokuapp.com/api/getAdmins')
         .then((admin) => admin.json())
         .then((res) => this.setState({ admin: res.admin }));
     };
@@ -84,7 +84,7 @@ class App extends Component {
       ++idToBeAdded;
     }
 
-    axios.post('http://localhost:3001/api/putCustomer', {
+    axios.post('https://nuber-manager.herokuapp.com/api/putCustomer', {
       _id: idToBeAdded,
       name: name,
       wantPickup: wantPickup,
@@ -102,7 +102,7 @@ class App extends Component {
     
 
 
-    axios.post('http://localhost:3001/api/putAdmin', {
+    axios.post('https://nuber-manager.herokuapp.com/api/putAdmin', {
     _id: idToBeAdded,  
     name: name,
     });
@@ -117,7 +117,7 @@ class App extends Component {
       }
 
 
-      axios.post('http://localhost:3001/api/putDriver', {
+      axios.post('https://nuber-manager.herokuapp.com/api/putDriver', {
       _id: idToBeAdded,  
       name: name,
         avail: avail,
@@ -130,7 +130,7 @@ class App extends Component {
   // to remove existing database information
   deleteDriver = (idTodelete) => {
  
-    axios.delete('http://localhost:3001/api/deleteDriver', {
+    axios.delete('https://nuber-manager.herokuapp.com/api/deleteDriver', {
       data: {
         id: idTodelete,
       },
@@ -139,7 +139,7 @@ class App extends Component {
 
   deleteCustomer = (idTodelete) => {
  
-    axios.delete('http://localhost:3001/api/deleteCustomer', {
+    axios.delete('https://nuber-manager.herokuapp.com/api/deleteCustomer', {
       data: {
         id: idTodelete,
       },
@@ -148,7 +148,7 @@ class App extends Component {
 
   deleteAdmin = (idTodelete) => {
  
-    axios.delete('http://localhost:3001/api/deleteAdmin', {
+    axios.delete('https://nuber-manager.herokuapp.com/api/deleteAdmin', {
       data: {
         id: idTodelete,
       },
@@ -159,7 +159,7 @@ class App extends Component {
   // to overwrite existing data base information
   updateDriver = (idToUpdate, updateToApply) => {
 
-    axios.post('http://localhost:3001/api/updateDriver', {
+    axios.post('hhttps://nuber-manager.herokuapp.com/api/updateDriver', {
       id: idToUpdate,
       update: { avail: updateToApply },
     });
@@ -167,7 +167,7 @@ class App extends Component {
 
   updateCustomer = (idToUpdate, updateToApply) => {
 
-    axios.post('http://localhost:3001/api/updateCustomer', {
+    axios.post('https://nuber-manager.herokuapp.com/api/updateCustomer', {
       id: idToUpdate,
       update: { wantPickup: updateToApply },
     });
