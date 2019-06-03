@@ -84,14 +84,16 @@ router.delete('/deleteData', (req, res) => {
 router.post('/putAdmin', (req, res) => {
   let admin = new Admin();
 
-  const {id, name} = req.body;
+  const {_id, name} = req.body;
 
-  if (!name) {
+  if ((!_id && _id !== 0) || !name) {
     return res.json({
       success: false,
       error: 'INVALID INPUTS',
+
     });
   }
+  admin._id = _id;
   admin.name = name;
 
   admin.save((err) => {
@@ -103,14 +105,17 @@ router.post('/putAdmin', (req, res) => {
 router.post('/putCustomer', (req, res) => {
   let customer = new Customer();
 
-  const {id, name, wantPickup, rating} = req.body;
 
-  if (!name) {
+  const {_id, name, wantPickup, rating} = req.body;
+
+  if ((!_id && _id !== 0) || !name) {
     return res.json({
       success: false,
       error: 'INVALID INPUTS',
+
     });
   }
+  customer._id = _id;
   customer.name = name;
   customer.wantPickup = wantPickup;
   customer.rating = rating;
@@ -123,14 +128,16 @@ router.post('/putCustomer', (req, res) => {
 router.post('/putDriver', (req, res) => {
   let driver = new Driver();
 
-  const {id, name, avail, rating} = req.body;
+  const {_id, name, avail, rating} = req.body;
 
-  if (!name) {
+  if ((!_id && _id !== 0) || !name) {
     return res.json({
       success: false,
       error: 'INVALID INPUTS',
+
     });
   }
+  driver._id = _id;
   driver.name = name;
   driver.avail = avail;
   driver.rating = rating;

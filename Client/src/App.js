@@ -9,6 +9,7 @@ class App extends Component {
     customer:[],
     admin:[],
     message: null,
+    _id: 0,
     name: null,
     avail: null,
     wantPickup: null,
@@ -76,8 +77,15 @@ class App extends Component {
 
   // Put Customer into DB
   putCustomerInDB = (name, wantPickup, rating) => {
+    
+    let currentIds = this.state.customer.map((customer) => customer._id);
+    let idToBeAdded = 0;
+    while (currentIds.includes(idToBeAdded)) {
+      ++idToBeAdded;
+    }
 
     axios.post('http://localhost:3001/api/putCustomer', {
+      _id: idToBeAdded,
       name: name,
       wantPickup: wantPickup,
       rating: rating,
@@ -86,18 +94,31 @@ class App extends Component {
   
   //Put admin into DB
   putAdminInDB = (name) => {
+    let currentIds = this.state.admin.map((admin) => admin._id);
+    let idToBeAdded = 0;
+    while (currentIds.includes(idToBeAdded)) {
+      ++idToBeAdded;
+    }
+    
 
 
     axios.post('http://localhost:3001/api/putAdmin', {
-      name: name,
+    _id: idToBeAdded,  
+    name: name,
     });
   };
 
     //Put driver into DB
     putDriverInDB = (name, avail, rating) => {
+      let currentIds = this.state.driver.map((driver) => driver._id);
+      let idToBeAdded = 0;
+      while (currentIds.includes(idToBeAdded)) {
+        ++idToBeAdded;
+      }
 
 
       axios.post('http://localhost:3001/api/putDriver', {
+        _id: idToBeAdded,
         name: name,
         avail: avail,
         rating: rating,
@@ -158,7 +179,8 @@ class App extends Component {
           {driver.length <= 0
             ? <h1>Nothing in the database </h1>
             : driver.map((driv) => (
-                <li style={{ padding: '10px' }} key={driv.id}>
+                <li style={{ padding: '10px' }} key={driv._id}>
+                  <span style={{ color: 'black' }}> Driver ID: </span> {driv._id} <br />
                   <span style={{ color: 'black' }}> Driver Name: </span> {driv.name} <br />
                   <span style={{ color: 'black' }}> Available to drive?: </span> {driv.avail} <br />
                   <span style={{ color: 'black' }}> rating: </span> {driv.rating}
@@ -196,10 +218,11 @@ class App extends Component {
           {customer.length <= 0
             ? <h1>Nothing in the database </h1>
             : customer.map((cust) => (
-                <li style={{ padding: '10px' }} key={cust.id}>
-                  <span style={{ color: 'black' }}> User Name: </span> {cust.name} <br />
+                <li style={{ padding: '10px' }} key={cust._id}>
+                  <span style={{ color: 'black' }}> Customer ID: </span> {cust._id} <br />
+                  <span style={{ color: 'black' }}> Customer Name: </span> {cust.name} <br />
                   <span style={{ color: 'black' }}> Wanting Pickup?: </span> {cust.wantPickup} <br />
-                  <span style={{ color: 'black' }}> rating: </span> {cust.rating}
+                  <span style={{ color: 'black' }}> Rating: </span> {cust.rating}
                 </li>
               ))}
         </ul>
@@ -235,6 +258,7 @@ class App extends Component {
             ? <h1>Nothing in the database </h1>
             : admin.map((adm) => (
                 <li style={{ padding: '10px' }} key={adm.id}>
+                  <span style={{ color: 'black' }}> Admin ID: </span> {adm._id} <br />
                   <span style={{ color: 'black' }}> Admin Name: </span> {adm.name} <br />
                 </li>
                 
