@@ -5,12 +5,10 @@ var Schema = mongoose.Schema;
 
 
 var DriverSchema = new Schema({
+    _id: Number,
     name: String,
-    avail: Boolean,
-    moreThanFour : Boolean,
-    rating : Number,
-    rate: Number,
-    distance: String
+    avail: String,
+    rating: Number,
 });
 
 module.exports = mongoose.model('Driver', DriverSchema);

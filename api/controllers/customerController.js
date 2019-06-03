@@ -17,7 +17,7 @@ exports.list_all_customers = function(req, res) {
 
 exports.create_an_account = function(req, res) {
   var new_customer = new Customer(req.body);
-  new_Customer.save(function(err, customer) {
+  new_customer.save(function(err, customer) {
     if (err)
       res.send(err);
     res.json(customer);
