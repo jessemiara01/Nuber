@@ -56,7 +56,7 @@ class App extends Component {
 
   // GET Method for driver data
   getDriversFromDb = () => {
-    fetch('http://localhost:3001/api/getDrivers')
+    fetch('https://nuber-manager.herokuapp.com/api/getDrivers')
       .then((driver) => driver.json())
       .then((res) => this.setState({ driver: res.driver }));
   };
