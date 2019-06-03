@@ -1,6 +1,6 @@
 // /client/App.js
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from '../node_modules/react';
+import axios from '../node_modules/axios';
 import './column.css';
 class App extends Component {
   // initialize our state
