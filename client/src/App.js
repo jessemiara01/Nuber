@@ -155,21 +155,54 @@ class App extends Component {
     });
   };
 
+  
+
   // our update method that uses our backend api
   // to overwrite existing data base information
-  updateDriver = (idToUpdate, updateToApply) => {
+  updateDriver = (idToUpdate, driverUpdateToApply) => {
 
-    axios.post('hhttps://nuber-manager.herokuapp.com/api/updateDriver', {
+    axios.post('https://nuber-manager.herokuapp.com/api/updateDriver', {
       id: idToUpdate,
-      update: { avail: updateToApply },
+      update: { avail: driverUpdateToApply },
     });
   };
 
-  updateCustomer = (idToUpdate, updateToApply) => {
+  updateCustomer = (idToUpdate, customerUpdateToApply) => {
 
     axios.post('https://nuber-manager.herokuapp.com/api/updateCustomer', {
       id: idToUpdate,
-      update: { wantPickup: updateToApply },
+      update: { wantPickup: customerUpdateToApply },
+    });
+  };
+
+
+  //The follwing 4 methods allow only one radio button 
+  //to be clicked at at time.
+
+  //For adding a new driver
+  driverHandleOptionChangePost = (changeEvent) => {
+    this.setState({
+      avail: changeEvent.target.value
+    });
+  };
+  //For updating a Driver
+  driverHandleOptionChangeUpdate = (changeEvent) => {
+    this.setState({
+      driverUpdateToApply: changeEvent.target.value
+    });
+  };
+
+  //For adding a new customer
+  customerHandleOptionChangePost = (changeEvent) => {
+    this.setState({
+      wantPickup: changeEvent.target.value
+    });
+  };
+
+  //For updating a customer
+  customerHandleOptionChangeUpdate = (changeEvent) => {
+    this.setState({
+      customerUpdateToApply: changeEvent.target.value
     });
   };
 
@@ -209,12 +242,25 @@ class App extends Component {
             placeholder="Driver's name"
             style={{ width: '200px' }}
           />
-            <input
-            type="text"
-            onChange={(e) => this.setState({ avail: e.target.value })}
-            placeholder="Available to drive?"
-            style={{ width: '200px' }}
-          />
+  <form>
+    <div className="radio">
+      <label>
+        <input type="radio" value="Yes" 
+                      checked={this.state.avail === 'Yes'} 
+                      onChange={this.driverHandleOptionChangePost} />
+        Available to drive
+      </label>
+    </div>
+    <div className="radio">
+      <label>
+        <input type="radio" value="No" 
+                      checked={this.state.avail === 'No'} 
+                      onChange={this.driverHandleOptionChangePost} />
+        Not available to drive
+      </label>
+    </div>
+
+  </form>
           <input
             type="text"
             onChange={(e) => this.setState({ rating: e.target.value })}
@@ -245,15 +291,25 @@ class App extends Component {
             onChange={(e) => this.setState({ idToUpdate: e.target.value })}
             placeholder="id of Driver to update here"
           />
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ updateToApply: e.target.value })}
-            placeholder="new availability status"
-          />
+    <div className="radio">
+      <label>
+        <input type="radio" value="Yes" 
+                      checked={this.state.driverUpdateToApply === 'Yes'} 
+                      onChange={this.driverHandleOptionChangeUpdate} />
+        Available to drive
+      </label>
+    </div>
+    <div className="radio">
+      <label>
+        <input type="radio" value="No" 
+                      checked={this.state.driverUpdateToApply === 'No'} 
+                      onChange={this.driverHandleOptionChangeUpdate} />
+        Not available to drive
+      </label>
+    </div>
           <button
             onClick={() =>
-              this.updateDriver(this.state.idToUpdate, this.state.updateToApply)
+              this.updateDriver(this.state.idToUpdate, this.state.driverUpdateToApply)
             }
           >
             UPDATE
@@ -283,12 +339,25 @@ class App extends Component {
             placeholder="User's Name"
             style={{ width: '200px' }}
           />
-                    <input
-            type="text"
-            onChange={(e) => this.setState({ wantPickup: e.target.value })}
-            placeholder="Available for pickup?"
-            style={{ width: '200px' }}
-          />
+  <form>
+    <div className="radio">
+      <label>
+        <input type="radio" value="Yes" 
+                      checked={this.state.wantPickup === 'Yes'} 
+                      onChange={this.customerHandleOptionChangePost} />
+        Available for pickup
+      </label>
+    </div>
+    <div className="radio">
+      <label>
+        <input type="radio" value="No" 
+                      checked={this.state.wantPickup === 'No'} 
+                      onChange={this.customerHandleOptionChangePost} />
+        Not available for pickup
+      </label>
+    </div>
+
+  </form>
                     <input
             type="text"
             onChange={(e) => this.setState({ rating: e.target.value })}
@@ -319,15 +388,25 @@ class App extends Component {
             onChange={(e) => this.setState({ idToUpdate: e.target.value })}
             placeholder="id of Customer to update here"
           />
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ updateToApply: e.target.value })}
-            placeholder="new availability status"
-          />
+    <div className="radio">
+      <label>
+        <input type="radio" value="Yes" 
+                      checked={this.state.customerUpdateToApply === 'Yes'} 
+                      onChange={this.customerHandleOptionChangeUpdate} />
+        Available for pickup
+      </label>
+    </div>
+    <div className="radio">
+      <label>
+        <input type="radio" value="No" 
+                      checked={this.state.customerUpdateToApply === 'No'} 
+                      onChange={this.customerHandleOptionChangeUpdate} />
+        Not available for pickup
+      </label>
+    </div>
           <button
             onClick={() =>
-              this.updateCustomer(this.state.idToUpdate, this.state.updateToApply)
+              this.updateCustomer(this.state.idToUpdate, this.state.customerUpdateToApply)
             }
           >
             UPDATE
@@ -377,30 +456,6 @@ class App extends Component {
   
   </div>
 
-
-        {/*
-
-        <div style={{ padding: '10px' }}>
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ idToUpdate: e.target.value })}
-            placeholder="id of item to update here"
-          />
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ updateToApply: e.target.value })}
-            placeholder="put new value of the item here"
-          />
-          <button
-            onClick={() =>
-              this.updateDB(this.state.idToUpdate, this.state.updateToApply)
-            }
-          >
-            UPDATE
-          </button>
-        </div> */}
       </div>
     ); 
   }
